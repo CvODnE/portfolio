@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Muhammed Nafil N</title>
+  <!-- Font Awesome for nav icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: #0d0d0d;
+      color: #fff;
+      text-align: center;
+      overflow-x: hidden;
+    }
+
+    /* Hero Section */
+    .hero {
+      position: relative;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      color: #fff;
+    }
+    .hero canvas {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 0;
+    }
+    .hero img, .hero h1, .hero p {
+      position: relative;
+      z-index: 1;
+    }
+    .hero img {
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      border: 6px solid #fff;
+      object-fit: cover;
+    }
+    .hero h1 {
+      font-size: 2.5em;
+      margin-top: 20px;
+    }
+    .typing { border-right: 2px solid #fff; animation: blink 0.7s infinite; padding-right: 4px; }
+    @keyframes blink { 50% { border-color: transparent; } }
+
+    section { padding: 100px 20px; }
+
+    /* Skills */
+    .skills span {
+      display: inline-block;
+      margin: 10px;
+      padding: 10px 20px;
+      background: #1a1a1a;
+      border-radius: 20px;
+      transition: transform 0.3s;
+    }
+    .skills span:hover { transform: scale(1.1); background: #333; }
+
+    /* Projects */
+    .projects a {
+      display: block;
+      margin: 20px auto;
+      padding: 15px;
+      width: min(680px, 90vw);
+      border-radius: 15px;
+      background: #1a1a1a;
+      text-decoration: none;
+      color: #fff;
+      font-size: 1.05em;
+      transition: transform 0.3s, background 0.3s;
+    }
+    .projects a:hover { transform: scale(1.03); background: #222; }
+    .projects img { width: 200px; vertical-align: middle; margin-right: 10px; }
+
+    /* Certificates */
+    h2 { font-size: 2em; margin-bottom: 50px; }
+    h3 { font-size: 1.5em; margin: 80px 0 30px; }
+
+    .slider-container {
+      position: relative;
+      width: min(720px, 92vw);
+      margin: 0 auto 80px;
+      overflow: hidden;
+      border-radius: 14px;
+      padding: 12px 0;
+    }
+
+    .slides {
+      display: flex;
+      width: 100%;
+      transition: transform 0.6s ease-in-out;
+      will-change: transform;
+    }
+
+    .slide-item {
+      flex: 0 0 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 6px 10px;
+    }
+
+    .slide-item img {
+      width: 100%;
+      max-width: 300px;
+      height: auto;
+      border-radius: 12px;
+      box-shadow: 0 10px 28px rgba(0,0,0,0.55);
+      cursor: pointer;
+      margin: 0;
+      background:#111;
+      animation: floatJump 4s ease-in-out infinite;
+      transition: transform 0.4s ease;
+    }
+
+    @keyframes floatJump {
+      0%, 100% { transform: translateY(0) scale(1); }
+      25% { transform: translateY(-6px) scale(1.02); }
+      50% { transform: translateY(0) scale(1); }
+      75% { transform: translateY(-3px) scale(1.01); }
+    }
+
+    .nav-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 44px;
+      height: 44px;
+      border: none;
+      background: rgba(0,0,0,0.55);
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 5;
+      transition: background 0.25s ease, transform 0.1s ease;
+    }
+    .nav-btn:hover { background: rgba(0,0,0,0.85); }
+    .nav-btn:active { transform: translateY(-50%) scale(0.96); }
+    .nav-prev { left: 10px; }
+    .nav-next { right: 10px; }
+
+    /* Popup */
+    .popup {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.85);
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+      padding: 16px;
+    }
+    .popup img {
+      max-width: 96%;
+      max-height: 86%;
+      border-radius: 12px;
+      box-shadow: 0 12px 36px rgba(0,0,0,0.8);
+      background:#111;
+    }
+    .popup .close {
+      position: absolute;
+      top: 22px; right: 26px;
+      font-size: 38px;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    /* Contact */
+    .contact a { display: inline-block; margin: 10px; font-size: 1.5em; color: #fff; transition: color 0.3s; }
+    .contact a:hover { color: #2afadf; }
+    .contact {
+      background: linear-gradient(135deg, #0f0f0f, #1b1b1b);
+      padding: 100px 20px;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+      gap: 25px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .contact-card {
+      background: #111;
+      border-radius: 16px;
+      padding: 25px 15px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      color: #fff;
+      text-decoration: none;
+      font-size: 1em;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
+      animation: floaty 6s ease-in-out infinite;
+    }
+
+    .contact-card i {
+      font-size: 2em;
+    }
+
+    .contact-card:hover {
+      transform: translateY(-8px) scale(1.05);
+      box-shadow: 0 12px 30px rgba(0, 200, 255, 0.5);
+    }
+
+    /* Specific brand colors */
+    .instagram i { color: #e1306c; }
+    .facebook i { color: #1877f2; }
+    .linkedin i { color: #0077b5; }
+    .github i { color: #fff; }
+    .email i { color: #ffcc00; }
+    .phone i { color: #00ff99; }
+    .location i { color: #ff6347; }
+
+    @keyframes floaty {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+  </style>
+</head>
+<body>
+  <!-- Hero -->
+  <div class="hero">
+    <canvas id="meshBg"></canvas>
+    <img src="WhatsApp_Image_2025-06-02_at_18.05.07__1_-removebg-preview.png" alt="Nafil" />
+    <h1>Hello, I'm <span class="typing"></span></h1>
+    <p>Crafting ideas into powerful digital products 🚀</p>
+  </div>
+
+  <!-- Skills -->
+  <section class="skills">
+    <h2>My Skills</h2>
+    <span>Web Development</span>
+    <span>Mobile Development</span>
+    <span>UI Engineering</span>
+    <span>Backend Engineering</span>
+    <span>DevOps</span>
+  </section>
+
+  <!-- Projects -->
+  <section class="projects">
+    <h2>My Creations</h2>
+    <a href="https://mathbox.pythonanywhere.com" target="_blank">
+      <img src="image (2).png" alt="MathBox Logo"> MathBox – A platform I built for math lovers 📘
+    </a>
+    <a href="https://grasped.pythonanywhere.com" target="_blank">
+      <img src="GraspEd-logo-text.png" alt="GraspEd Logo"> GraspEd – My startup to connect learners & teachers 🤝
+    </a>
+  </section>
+
+  <!-- Certificates -->
+  <section class="certificates">
+    <h2>Certificates</h2>
+
+    <!-- Software Engineering -->
+    <h3>Software Engineering</h3>
+    <div class="slider-container" id="slider1">
+      <div class="slides">
+        <div class="slide-item"><img src="Ui Engineer.jpg" onclick="openPopup(this.src)"></div>
+        <div class="slide-item"><img src="Backend Engineer.jpg" onclick="openPopup(this.src)"></div>
+        <div class="slide-item"><img src="DevOps-steyp.jpeg" onclick="openPopup(this.src)"></div>
+        <div class="slide-item"><img src="Web Application Developer.jpg" onclick="openPopup(this.src)"></div>
+        <div class="slide-item"><img src="Mobile Application Developer.jpg" onclick="openPopup(this.src)"></div>
+      </div>
+      <button class="nav-btn nav-prev" onclick="plusSlides(-1,'slider1')"><i class="fa-solid fa-chevron-left"></i></button>
+      <button class="nav-btn nav-next" onclick="plusSlides(1,'slider1')"><i class="fa-solid fa-chevron-right"></i></button>
+    </div>
+
+    <!-- Hackathons -->
+    <h3>Hackathons</h3>
+    <div class="slider-container" id="slider2">
+      <div class="slides">
+        <div class="slide-item"><img src="Hackthon-1.jpg" onclick="openPopup(this.src)"></div>
+        <div class="slide-item"><img src="Hackthon-2.jpg" onclick="openPopup(this.src)"></div>
+        <div class="slide-item"><img src="Hackthon-3.jpg" onclick="openPopup(this.src)"></div>
+      </div>
+      <button class="nav-btn nav-prev" onclick="plusSlides(-1,'slider2')"><i class="fa-solid fa-chevron-left"></i></button>
+      <button class="nav-btn nav-next" onclick="plusSlides(1,'slider2')"><i class="fa-solid fa-chevron-right"></i></button>
+    </div>
+
+    <!-- Project Completion -->
+    <h3>Project Completion</h3>
+    <div class="slider-container" id="slider3">
+      <div class="slides">
+        <div class="slide-item"><img src="Project Certificate 1.jpg" onclick="openPopup(this.src)"></div>
+        <div class="slide-item"><img src="Project Certificate 2.jpg" onclick="openPopup(this.src)"></div>
+        <div class="slide-item"><img src="Project Certificate 3.jpg" onclick="openPopup(this.src)"></div>
+        <div class="slide-item"><img src="Project Certificate 4.jpg" onclick="openPopup(this.src)"></div>
+      </div>
+      <button class="nav-btn nav-prev" onclick="plusSlides(-1,'slider3')"><i class="fa-solid fa-chevron-left"></i></button>
+      <button class="nav-btn nav-next" onclick="plusSlides(1,'slider3')"><i class="fa-solid fa-chevron-right"></i></button>
+    </div>
+  </section>
+
+  <!-- Popup -->
+  <div class="popup" id="popup">
+    <span class="close" onclick="closePopup()">&times;</span>
+    <img id="popupImg">
+  </div>
+
+  <!-- Contact -->
+  <section class="contact">
+    <h2>Contact Me</h2>
+    <div class="contact-grid">
+      <a href="https://instagram.com/nafil.n_" target="_blank" class="contact-card instagram">
+        <i class="fab fa-instagram"></i>
+        <span>@nafil.n_</span>
+      </a>
+      <a href="https://facebook.com/NafilN" target="_blank" class="contact-card facebook">
+        <i class="fab fa-facebook"></i>
+        <span>Nafil N</span>
+      </a>
+      <a href="https://linkedin.com/in/NafilN" target="_blank" class="contact-card linkedin">
+        <i class="fab fa-linkedin"></i>
+        <span>Nafil N</span>
+      </a>
+      <a href="https://github.com/CvODnE" target="_blank" class="contact-card github">
+        <i class="fab fa-github"></i>
+        <span>CvODnE</span>
+      </a>
+      <a href="mailto:nafilmnytfj@gmail.com" class="contact-card email">
+        <i class="fa fa-envelope"></i>
+        <span>nafilmnytfj@gmail.com</span>
+      </a>
+      <div class="contact-card phone">
+        <i class="fa fa-phone"></i>
+        <span>+91 9544758339</span>
+      </div>
+      <div class="contact-card location">
+        <i class="fa fa-map-marker-alt"></i>
+        <span>Kollam, Kerala, India</span>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Typewriter effect
+    const texts = ["Nafil", "a Developer", "a Coder", "a Programmer", "a Creator"];
+    let count = 0, index = 0, currentText = '', letter = '';
+    (function type(){
+      if(count === texts.length){ count = 0; }
+      currentText = texts[count];
+      letter = currentText.slice(0, ++index);
+      document.querySelector('.typing').textContent = letter;
+      if(letter.length === currentText.length){
+        count++; index = 0;
+        setTimeout(type, 1000);
+      } else {
+        setTimeout(type, 120);
+      }
+    })();
+
+    // Sliders
+    const slidePositions = { slider1: 0, slider2: 0, slider3: 0 };
+    const timers = {};
+
+    function plusSlides(n, id) {
+      const container = document.getElementById(id);
+      const track = container.querySelector('.slides');
+      const items = container.querySelectorAll('.slide-item');
+      const total = items.length;
+
+      let pos = slidePositions[id] + n;
+      if (pos < 0) pos = total - 1;
+      if (pos >= total) pos = 0;
+
+      slidePositions[id] = pos;
+      track.style.transform = `translateX(-${pos * 100}%)`;
+      restartAuto(id);
+    }
+
+    // Auto Slide
+    function autoSlide(id){ plusSlides(1, id); }
+    function startAuto(id, ms){
+      stopAuto(id);
+      timers[id] = setInterval(()=>autoSlide(id), ms);
+    }
+    function stopAuto(id){
+      if(timers[id]) clearInterval(timers[id]);
+    }
+    function restartAuto(id){
+      const speed = id === 'slider1' ? 4500 : id === 'slider2' ? 5200 : 4800;
+      startAuto(id, speed);
+    }
+    restartAuto('slider1');
+    restartAuto('slider2');
+    restartAuto('slider3');
+
+    // Pause on hover
+    document.querySelectorAll('.slider-container').forEach(sc=>{
+      sc.addEventListener('mouseenter', ()=> stopAuto(sc.id));
+      sc.addEventListener('mouseleave', ()=> restartAuto(sc.id));
+    });
+
+    // Popup
+    function openPopup(src) {
+      document.getElementById("popup").style.display = "flex";
+      document.getElementById("popupImg").src = src;
+    }
+    function closePopup() {
+      document.getElementById("popup").style.display = "none";
+    }
+
+    // Mesh Gradient Background Animation
+    const canvas = document.getElementById('meshBg');
+    const ctx = canvas.getContext('2d');
+    function sizeCanvas(){
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    sizeCanvas();
+
+    const blobs = [
+      {x: 300, y: 200, r: 250, dx: 0.9, dy: 0.8, color: 'rgba(255,0,128,0.45)'},
+      {x: 800, y: 420, r: 300, dx: -0.7, dy: 0.9, color: 'rgba(121,40,202,0.45)'},
+      {x: 620, y: 620, r: 200, dx: 1.0, dy: -0.7, color: 'rgba(42,250,223,0.45)'},
+      {x: 1020, y: 320, r: 220, dx: -0.9, dy: -0.8, color: 'rgba(255,140,0,0.45)'}
+    ];
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      blobs.forEach(b => {
+        ctx.beginPath();
+        const g = ctx.createRadialGradient(b.x, b.y, b.r*0.15, b.x, b.y, b.r);
+        g.addColorStop(0, b.color);
+        g.addColorStop(1, 'transparent');
+        ctx.fillStyle = g;
+        ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
+        ctx.fill();
+
+        b.x += b.dx;
+        b.y += b.dy;
+        if(b.x - b.r < 0 || b.x + b.r > canvas.width) b.dx *= -1;
+        if(b.y - b.r < 0 || b.y + b.r > canvas.height) b.dy *= -1;
+      });
+      requestAnimationFrame(animate);
+    }
+    animate();
+
+    window.addEventListener('resize', sizeCanvas);
+  </script>
+</body>
+</html>
